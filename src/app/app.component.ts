@@ -5,19 +5,94 @@ export class Member {
   name: string;
 }
 
+const MEMBERS: Member[] = [
+  { id: 11, name: 'あああ' },
+  { id: 12, name: 'かかか' },
+  { id: 13, name: 'さささ' },
+  { id: 14, name: 'たたた' },
+  { id: 15, name: 'ななな' },
+  { id: 16, name: 'ははは' },
+  { id: 17, name: 'ままま' },
+  { id: 18, name: 'ややや' },
+  { id: 19, name: 'ららら' },
+  { id: 20, name: 'わわわ' },
+]
+
 @Component({
   selector: 'my-app',
   template: `
   <h1>{{title}}</h1>
-  <h2>{{member.name}}</h2>
-  <div><label>id: </label>{{member.id}}</div>
-  <div><label>name: </label>{{member.name}}</div>
+  <h2>社員一覧</h2>
+  <ul class="members">
+    <li *ngFor="let member of members" (click)="onSelect(member)">
+      <span class="badge">{{member.id}}</span> {{member.name}}
+    </li>
+  </ul>
+  <div *ngIf="selectedMember">
+    <h2>{{selectedMember.name}}</h2>
+    <div><label>id: </label>{{selectedMember.id}}</div>
+    <div>
+      <label>name: </label>
+      <input type="text" [(ngModel)]="selectedMember.name" placeholder="名前">
+    </div>
+  </div>
   `,
+  styles: [`
+    .selected {
+      backgroud-color: #CFD8DC !important;
+      color: white;
+    }
+    .members {
+      margin: 0 0 2em 0;
+      list-style-type: none;
+      padding: 0;
+      width: 15em;
+    }
+    .members li {
+      cursor: pointer;
+      position: relative;
+      left: 0;
+      background-color: #EEE;
+      margin: .5em;
+      padding: .3em 0;
+      height: 1.6em;
+      border-radius: 4px;
+    }
+    .members li.selected:hover {
+      background-color: #BBDBDC !important;
+      color: white;
+    }
+    .members li:hover {
+      color: #607D8B;
+      background-color: #DDD;
+      left: .1em;
+    }
+    .members .text {
+      position: relative;
+      top: -3px;
+    }
+    .members .badge {
+      display: inline-block;
+      font-size: small;
+      color: white;
+      padding: 0.8em 0.7em 0 0.7em;
+      background-color: #607D8B;
+      line-height: 1em;
+      position: relative;
+      left: -1px;
+      top: -4px;
+      height: 1.8em;
+      margin-right: .8em;
+      border-radius: 4px 0 0 4px;
+    }
+  `]
 })
 export class AppComponent  {
   title = '自社社員名簿';
-  member: Member = {
-    id: 1,
-    name: '山田太郎'
-  };
+  members = MEMBERS;
+  selectedMember: Member;
+
+  onSelect(member: Member): void {
+    this.selectedMember = member;
+  }
  }
