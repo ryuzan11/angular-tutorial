@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent }  from './app.component';
 import { MemberDetailComponent } from './member-detail.component'
-import { Member } from './member';
 
 @NgModule({
   imports:      [

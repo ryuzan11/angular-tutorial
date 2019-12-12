@@ -1,18 +1,6 @@
 import { Component } from '@angular/core';
 import { Member } from './member'
-
-const MEMBERS: Member[] = [
-  { id: 11, name: 'あああ' },
-  { id: 12, name: 'かかか' },
-  { id: 13, name: 'さささ' },
-  { id: 14, name: 'たたた' },
-  { id: 15, name: 'ななな' },
-  { id: 16, name: 'ははは' },
-  { id: 17, name: 'ままま' },
-  { id: 18, name: 'ややや' },
-  { id: 19, name: 'ららら' },
-  { id: 20, name: 'わわわ' },
-]
+import { MemberService } from './member.service';
 
 @Component({
   selector: 'my-app',
@@ -75,14 +63,21 @@ const MEMBERS: Member[] = [
       margin-right: .8em;
       border-radius: 4px 0 0 4px;
     }
-  `]
+  `],
+  providers: [ MemberService ]
 })
 export class AppComponent  {
   title = '自社社員名簿';
-  members = MEMBERS;
+  members = Member[];
   selectedMember: Member;
+
+  constructor(private memberService: MemberService) {} //Dependency Injection
 
   onSelect(member: Member): void {
     this.selectedMember = member;
+  }
+
+  getMembers(): void {
+    this.members = this.memberService.getMembers();
   }
  }
